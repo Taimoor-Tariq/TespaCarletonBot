@@ -2,3 +2,4 @@ TEMP
 package-lock.json
 node_modules
 .env
+/modules/db/data.db

@@ -2,7 +2,7 @@ const
     fs = require('fs'),
     { REST } = require('@discordjs/rest'),
     { Routes } = require('discord-api-types/v9'),
-    { BOT_TOKEN } = require('../config'),
+    { BOT_TOKEN, SERVER_ID, DEV_SERVER_ID } = require('../config'),
     rest = new REST({ version: '9' }).setToken(BOT_TOKEN);
 
 module.exports = (client) => {
@@ -15,10 +15,18 @@ module.exports = (client) => {
             data.push(command.data);
         });
 
-        await rest.put(
-            Routes.applicationCommands(client.user.id),
-            { body: data },
-        );
+        // await rest.put( Routes.applicationCommands(client.user.id), { body: data } );
+        await rest.put( Routes.applicationGuildCommands(client.user.id, DEV_SERVER_ID), { body: data } );
+
+        await rest.put( Routes.applicationCommandPermissions(client.user.id, DEV_SERVER_ID, (await rest.get(Routes.applicationGuildCommands(client.user.id, DEV_SERVER_ID))).filter(c => (c.name == "gamerolemenu" && c.type == 1))[0].id), { body: {
+            permissions: [
+                {
+                    id: "220161488516546561",
+                    type: 2,
+                    permission: true
+                }
+            ] 
+        }});
 
         console.log('Successfully reloaded application (/) commands.');
 
