@@ -11,7 +11,10 @@ async function main(interaction, client) {
 
         case "MESSAGE_COMPONENT":
             switch (interaction.customId) {
-                case "GAME_ROLE_SELECT":
+                case "GAME_ROLE_SELECT_0":
+                case "GAME_ROLE_SELECT_1":
+                case "GAME_ROLE_SELECT_2":
+                case "GAME_ROLE_SELECT_3":
                     DB.GAME_ROLE_MENU.getAll().then(async roles => {
                         await roles.map(async r => { await interaction.member.roles.remove(r.ID) });
                         await interaction.values.map(async r => { await interaction.member.roles.add(r) });

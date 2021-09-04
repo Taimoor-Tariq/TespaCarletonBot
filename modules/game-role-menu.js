@@ -29,18 +29,20 @@ module.exports = async (client) => {
             return acc
         }, []);
     
-    
+        let i=0;
         await ROLES.map(roles => {
             COMPONENTS.push(new MessageActionRow()
                 .addComponents(
                     new MessageSelectMenu()
-                        .setCustomId('GAME_ROLE_SELECT')
+                        .setCustomId(`GAME_ROLE_SELECT_${i}`)
                         .setPlaceholder('None')
                         .setMinValues(0)
                         .setMaxValues(roles.length)
                         .addOptions(roles)
                 )
-            )
+            );
+
+            i++;
         });
     
         COMPONENTS.push(new MessageActionRow().addComponents(
