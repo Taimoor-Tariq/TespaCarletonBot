@@ -19,10 +19,15 @@ module.exports = (client) => {
         await rest.put( Routes.applicationGuildCommands(client.user.id, SERVER_ID), { body: data } );
         await rest.put( Routes.applicationGuildCommands(client.user.id, DEV_SERVER_ID), { body: data } );
 
-        await rest.put( Routes.applicationCommandPermissions(client.user.id, SERVER_ID, (await rest.get(Routes.applicationGuildCommands(client.user.id, DEV_SERVER_ID))).filter(c => (c.name == "gamerolemenu" && c.type == 1))[0].id), { body: {
+        await rest.put( Routes.applicationCommandPermissions(client.user.id, SERVER_ID, (await rest.get(Routes.applicationGuildCommands(client.user.id, SERVER_ID))).filter(c => (c.name == "gamerolemenu" && c.type == 1))[0].id), { body: {
             permissions: [
                 {
                     id: "220161488516546561",
+                    type: 2,
+                    permission: true
+                },
+                {
+                    id: "241764721814929408",
                     type: 2,
                     permission: true
                 }

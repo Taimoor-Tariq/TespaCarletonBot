@@ -13,23 +13,17 @@ async function main(interaction, client) {
             switch (interaction.customId) {
                 case "GAME_ROLE_SELECT":
                     DB.GAME_ROLE_MENU.getAll().then(async roles => {
-                        Promise.all(roles.map(async role => {
-                            try { await interaction.member.roles.remove(await interaction.guild.roles.fetch(role.id)) } catch (error) {}
-                        })).then(async () => {
-                            await interaction.values.map(async role => {
-                                try { await interaction.member.roles.add(await interaction.guild.roles.fetch(role)) } catch (error) {}
-                            });
+                        await roles.map(async r => { await interaction.member.roles.remove(r.ID) });
+                        await interaction.values.map(async r => { await interaction.member.roles.add(r) });
 
-                            interaction.deferUpdate();
-                        });
+                        interaction.deferUpdate();
                     })
                     return;
 
                 case "REMOVE_ALL_GAME_ROLES":
                     DB.GAME_ROLE_MENU.getAll().then(async roles => {
-                        await roles.map(async role => {
-                            try { await interaction.member.roles.remove(await interaction.guild.roles.fetch(role.id)) } catch (error) {}
-                        });
+                        roles.map(async r => { await interaction.member.roles.remove(r.ID) });
+                        
                         interaction.deferUpdate();
                     })
 
