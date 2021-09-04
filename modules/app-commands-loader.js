@@ -15,7 +15,6 @@ module.exports = (client) => {
             data.push(command.data);
         });
 
-        // await rest.put( Routes.applicationCommands(client.user.id), { body: data } );
         await rest.put( Routes.applicationGuildCommands(client.user.id, SERVER_ID), { body: data } );
         await rest.put( Routes.applicationGuildCommands(client.user.id, DEV_SERVER_ID), { body: data } );
 
